@@ -1,2 +1,3 @@
-^precommit\.test\.pkg\.Rproj$
 ^\.Rproj\.user$
+^\.pre-commit-config\.yaml$
+^precommit\.test\.pkg\.Rproj$

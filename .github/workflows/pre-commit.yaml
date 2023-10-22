@@ -1,0 +1,36 @@
+name: pre-commit
+on:
+  push:
+    branches:
+      - 'master'
+      - 'main'
+  pull_request:
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    if: !contains(github.event.head_commit.message, 'ci skip')
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.6.0
+        with:
+          access_token: ${{ github.token }}
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install system dependencies
+        run: |
+          # your system installation code here
+          # sudo apt-get install -y libcurl4-openssl-dev
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11"
+          architecture: "x64"
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
+      - uses: pre-commit-ci/lite-action@v1.0.1
+        if: always()
+
+    env:
+      RENV_CONFIG_CACHE_ENABLED: FALSE
